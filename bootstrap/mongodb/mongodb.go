@@ -25,7 +25,23 @@ func NewMongoDB(config *config.Config) (*MongoDB, error) {
 		return nil, err
 	}
 
-	log.Println("MongoDB connected")
-
 	return &MongoDB{Client: client}, nil
+}
+
+func (m *MongoDB) onStart() error {
+	log.Println("MongoDB started successfully.")
+	return nil
+}
+
+func (m *MongoDB) onStop(ctx context.Context) error {
+	log.Println("MongoDB stopping...")
+
+	if err := m.Client.Disconnect(ctx); err != nil {
+		log.Printf("Error disconnecting MongoDB: %v", err)
+		return err
+	} else {
+		log.Println("MongoDB disconnected successfully.")
+	}
+
+	return nil
 }
