@@ -1,112 +1,151 @@
 # Fiber-FX-Boilerplate
 
-A modern Go web application boilerplate using Fiber framework with Uber FX dependency injection and MongoDB integration.
+A modern Go web application boilerplate using Fiber framework with Uber FX dependency injection, MongoDB integration, and Swagger documentation.
 
-## Features
+## 🚀 Features
 
 - **Fiber Framework**: High-performance web framework
 - **Uber FX**: Dependency injection for clean architecture
 - **MongoDB**: NoSQL database integration
+- **Swagger**: Automated API documentation
 - **Zap Logger**: Structured logging
+- **Docker Support**: Containerization ready
+- **GitHub Actions**: Automated swagger generation
 - **Graceful Shutdown**: Proper application shutdown handling
-- **Modular Structure**: Well-organized code architecture
+- **Environment Config**: Easy configuration management
+- **Health Check**: Built-in health monitoring
 
-## Project Structure
+## 📁 Project Structure
 
 ```
+├── .github/
+│   └── workflows/       # GitHub Actions workflows
 ├── src/
 │   ├── bootstrap/
-│   │   ├── config/      # Application configuration
-│   │   ├── logger/      # Zap logger setup
-│   │   ├── mongodb/     # MongoDB connection management
-│   │   └── server/      # Fiber server initialization
+│   │   ├── config/     # Application configuration
+│   │   ├── logger/     # Zap logger setup
+│   │   ├── mongodb/    # MongoDB connection
+│   │   └── server/     # Fiber server setup
 │   ├── internal/
-│   │   ├── model/       # Data models and DTOs
-│   │   ├── handler/     # HTTP request handlers
-│   │   ├── service/     # Business logic layer
-│   │   ├── repository/  # Data access layer
-│   │   └── routes/      # Route definitions
-│   └── main.go         # Application entry point
+│   │   ├── handler/    # HTTP request handlers
+│   │   ├── middleware/ # Custom middlewares
+│   │   ├── model/     # Data models
+│   │   ├── repository/ # Data access layer
+│   │   ├── routes/    # Route definitions
+│   │   └── service/   # Business logic
+├── docs/              # Swagger documentation
+├── Dockerfile        # Docker configuration
+├── docker-compose.yml
+├── .env.example      # Environment variables template
+└── main.go          # Application entry point
 ```
 
-## Architecture
-
-- **Handler Layer**: Handles HTTP requests and responses
-- **Service Layer**: Contains business logic
-- **Repository Layer**: Manages data persistence
-- **Model Layer**: Defines data structures
-- **Bootstrap**: Manages application initialization
-
-## Dependencies
+## 🛠 Prerequisites
 
 - Go 1.21+
-- Fiber v2
-- Uber FX
-- MongoDB Go Driver
-- Zap Logger
+- MongoDB
+- Docker (optional)
 
-## Setup & Running
+## ⚡️ Quick Start
 
-1. Clone the repository
-2. Configure environment variables in `.env`
-3. Install dependencies:
+1. **Clone the repository**
 ```bash
-go mod tidy
+git clone https://github.com/yourusername/fiber-fx-boilerplate.git
 ```
-4. Run the application:
+
+2. **Set up environment variables**
 ```bash
+cp .env.example .env
+# Edit .env with your configurations
+```
+
+3. **Run with Docker**
+```bash
+docker-compose up --build
+```
+
+**OR**
+
+3. **Run locally**
+```bash
+go mod download
 go run main.go
 ```
 
-## API Endpoints
+## 🔄 API Endpoints
 
-The application follows RESTful conventions:
+### Core Endpoints
+- `GET /api/health` - Health check endpoint
 
+### Foo Resource
 - `GET /api/foo` - Get all items
 - `GET /api/foo/:id` - Get item by ID
 - `POST /api/foo` - Create new item
 - `PUT /api/foo/:id` - Update existing item
 
-## Key Features
+## 📚 API Documentation
 
-1. **Dependency Injection**
-   - Centralized dependency management using Uber FX
-   - Clean and testable code structure
+Swagger UI is available at:
+```
+http://localhost:8090/swagger/
+```
 
-2. **MongoDB Integration**
-   - Configured connection pooling
-   - Repository pattern implementation
+Documentation is automatically generated and updated via GitHub Actions.
 
-3. **Routing**
-   - Modular route definitions
-   - Group-based route organization
+## 🐳 Docker Support
 
-4. **Error Handling**
-   - Consistent error responses
-   - Structured logging
+Build and run with Docker:
+```bash
+# Build image
+docker build -t fiber-fx-app .
 
-5. **Configuration**
-   - Environment-based configuration
-   - Easy to extend and modify
+# Run container
+docker run -p 8090:8090 fiber-fx-app
+```
 
-## Best Practices
+Or use docker-compose:
+```bash
+docker-compose up
+```
 
-- Clean Architecture principles
-- Dependency Injection pattern
-- Repository pattern
-- Interface-based design
-- Modular component structure
+## 🔧 Configuration
 
-## Contributing
+Configuration is managed through environment variables:
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| APP_ENV | Application environment | development |
+| PORT | Server port | 8090 |
+| MONGO_DB_URL | MongoDB connection URL | - |
+| LOG_LEVEL | Logging level | info |
+| QUERY_TIMEOUT | Database query timeout | 1m |
+
+## 🏗 Architecture
+
+The project follows clean architecture principles:
+
+- **Handlers**: HTTP request handling
+- **Services**: Business logic implementation
+- **Repositories**: Data access abstraction
+- **Models**: Data structures
+- **Middleware**: Request/Response processing
+
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## License
+## 📝 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [Fiber](https://github.com/gofiber/fiber)
+- [Uber FX](https://github.com/uber-go/fx)
+- [Swaggo](https://github.com/swaggo/swag)
 
 
