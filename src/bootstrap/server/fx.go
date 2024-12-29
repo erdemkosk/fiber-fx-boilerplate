@@ -2,7 +2,9 @@ package server
 
 import (
 	"context"
+	"fmt"
 
+	"github.com/erdemkosk/fiber-fx-boilerplate/src/bootstrap/config"
 	"github.com/erdemkosk/fiber-fx-boilerplate/src/internal/handler"
 	"github.com/erdemkosk/fiber-fx-boilerplate/src/internal/repository"
 	"github.com/erdemkosk/fiber-fx-boilerplate/src/internal/routes"
@@ -19,12 +21,12 @@ func NewFiberApp() *fiber.App {
 	})
 }
 
-func StartFiberApp(lifecycle fx.Lifecycle, app *fiber.App, logger *zap.Logger) {
+func StartFiberApp(lifecycle fx.Lifecycle, app *fiber.App, logger *zap.Logger, cfg *config.Config) {
 	lifecycle.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			go func() {
-				logger.Info("🚀 Fiber server starting on :3000")
-				if err := app.Listen(":3000"); err != nil {
+				logger.Info(fmt.Sprintf("🚀 Fiber server starting on :%d", cfg.App.Port))
+				if err := app.Listen(fmt.Sprintf(":%d", cfg.App.Port)); err != nil {
 					logger.Fatal("Fiber server failed to start", zap.Error(err))
 				}
 			}()
