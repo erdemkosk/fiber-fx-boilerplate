@@ -1,0 +1,178 @@
+{
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample server for Fiber Boilerplate.",
+        "title": "Fiber FX Boilerplate API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "email": "erdemkosk@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8090",
+    "basePath": "/api",
+    "paths": {
+        "/foo": {
+            "get": {
+                "description": "Get all foo items from the database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "foo"
+                ],
+                "summary": "Get all items",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/model.Foo"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new foo item",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "foo"
+                ],
+                "summary": "Create a new foo",
+                "parameters": [
+                    {
+                        "description": "Foo object",
+                        "name": "foo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Foo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.Foo"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/foo/{id}": {
+            "get": {
+                "description": "Get a foo item by its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "foo"
+                ],
+                "summary": "Get a foo by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Foo ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Foo"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/health": {
+            "get": {
+                "description": "Get server health status",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "health"
+                ],
+                "summary": "Health check endpoint",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.Foo": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "description": "The creation timestamp",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "The description of the foo item",
+                    "type": "string",
+                    "example": "This is an example foo item"
+                },
+                "id": {
+                    "description": "The unique identifier for the foo item",
+                    "type": "string",
+                    "example": "5f7b5e1b9b0b3a1b3c9b0b3a"
+                },
+                "name": {
+                    "description": "The name of the foo item",
+                    "type": "string",
+                    "example": "Example Foo"
+                }
+            }
+        }
+    }
+}

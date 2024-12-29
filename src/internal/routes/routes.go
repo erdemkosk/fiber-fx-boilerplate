@@ -23,10 +23,14 @@ var Module = fx.Options(
 
 func registerRoutes(
 	fooHandler *handler.FooHandler,
+	healthHandler *handler.HealthHandler,
 	route Route,
 ) {
 	api := route.Fiber.Group("/api")
 
 	fooRouter := NewFooRouter(fooHandler)
+	healthRouter := NewHealthRouter(healthHandler)
+
 	fooRouter.SetupRoutes(api)
+	healthRouter.SetupRoutes(api)
 }

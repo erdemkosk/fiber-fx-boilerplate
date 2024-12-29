@@ -2,6 +2,8 @@ module github.com/erdemkosk/fiber-fx-boilerplate
 
 go 1.23.3
 
+require github.com/gofiber/swagger v1.1.0
+
 require (
 	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/PuerkitoBio/purell v1.2.1 // indirect
@@ -37,6 +39,7 @@ require (
 	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/swaggo/fiber-swagger v1.3.0 // indirect
 	github.com/swaggo/files v1.0.1 // indirect
+	github.com/swaggo/files/v2 v2.0.0 // indirect
 	github.com/swaggo/swag v1.16.4 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.58.0 // indirect

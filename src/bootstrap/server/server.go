@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 
+	_ "github.com/erdemkosk/fiber-fx-boilerplate/docs"
 	"github.com/erdemkosk/fiber-fx-boilerplate/src/bootstrap/config"
 	"github.com/erdemkosk/fiber-fx-boilerplate/src/internal/handler"
+	"github.com/erdemkosk/fiber-fx-boilerplate/src/internal/middleware"
 	"github.com/erdemkosk/fiber-fx-boilerplate/src/internal/repository"
 	"github.com/erdemkosk/fiber-fx-boilerplate/src/internal/routes"
 	"github.com/erdemkosk/fiber-fx-boilerplate/src/internal/service"
@@ -15,10 +17,13 @@ import (
 )
 
 func NewFiberApp() *fiber.App {
-	return fiber.New(fiber.Config{
+	app := fiber.New(fiber.Config{
 		DisableStartupMessage: true,
-		EnablePrintRoutes:     false,
 	})
+
+	app.Get("/swagger/*", middleware.SwaggerMiddleware())
+
+	return app
 }
 
 func StartFiberApp(lifecycle fx.Lifecycle, app *fiber.App, logger *zap.Logger, cfg *config.Config) {
@@ -26,6 +31,7 @@ func StartFiberApp(lifecycle fx.Lifecycle, app *fiber.App, logger *zap.Logger, c
 		OnStart: func(ctx context.Context) error {
 			go func() {
 				logger.Info(fmt.Sprintf("🚀 Fiber server starting on :%d", cfg.App.Port))
+				logger.Info("📚 Swagger documentation is available at: /swagger")
 				if err := app.Listen(fmt.Sprintf(":%d", cfg.App.Port)); err != nil {
 					logger.Fatal("Fiber server failed to start", zap.Error(err))
 				}

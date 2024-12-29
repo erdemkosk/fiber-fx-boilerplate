@@ -14,7 +14,7 @@ var Module = fx.Options(
 	config.Module,
 	logger.Module,
 	fx.WithLogger(func(log *zap.Logger) fxevent.Logger {
-		return &fxevent.NopLogger
+		return &fxevent.ZapLogger{Logger: log.Named("fx").WithOptions(zap.IncreaseLevel(zap.ErrorLevel))}
 	}),
 	mongodb.Module,
 	server.Module,

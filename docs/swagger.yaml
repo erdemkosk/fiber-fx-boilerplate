@@ -1,0 +1,121 @@
+basePath: /api
+definitions:
+  model.Foo:
+    properties:
+      created_at:
+        description: The creation timestamp
+        type: string
+      description:
+        description: The description of the foo item
+        example: This is an example foo item
+        type: string
+      id:
+        description: The unique identifier for the foo item
+        example: 5f7b5e1b9b0b3a1b3c9b0b3a
+        type: string
+      name:
+        description: The name of the foo item
+        example: Example Foo
+        type: string
+    type: object
+host: localhost:8090
+info:
+  contact:
+    email: erdemkosk@gmail.com
+    name: API Support
+  description: This is a sample server for Fiber Boilerplate.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Fiber FX Boilerplate API
+  version: "1.0"
+paths:
+  /foo:
+    get:
+      consumes:
+      - application/json
+      description: Get all foo items from the database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/model.Foo'
+              type: array
+            type: array
+      summary: Get all items
+      tags:
+      - foo
+    post:
+      consumes:
+      - application/json
+      description: Create a new foo item
+      parameters:
+      - description: Foo object
+        in: body
+        name: foo
+        required: true
+        schema:
+          $ref: '#/definitions/model.Foo'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Foo'
+        "400":
+          description: Bad Request
+          schema: {}
+      summary: Create a new foo
+      tags:
+      - foo
+  /foo/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a foo item by its ID
+      parameters:
+      - description: Foo ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Foo'
+        "404":
+          description: Not Found
+          schema: {}
+      summary: Get a foo by id
+      tags:
+      - foo
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Get server health status
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Health check endpoint
+      tags:
+      - health
+schemes:
+- http
+- https
+swagger: "2.0"
