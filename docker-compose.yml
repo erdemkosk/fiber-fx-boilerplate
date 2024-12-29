@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      - APP_ENV=${APP_ENV}
+      - PORT=${PORT}
+      - MONGO_DB_URL=${MONGO_DB_URL}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - QUERY_TIMEOUT=${QUERY_TIMEOUT}
+    restart: unless-stopped 

@@ -1,0 +1,7 @@
+.git
+.gitignore
+.env.example
+README.md
+docs/
+*.md
+.github/ 
