@@ -21,7 +21,7 @@ func NewHealthHandler() *HealthHandler {
 // @Router /health [get]
 func (h *HealthHandler) Check(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
-		"status": "healthy",
+		"status": "OK",
 		"time":   time.Now(),
 	})
 }
