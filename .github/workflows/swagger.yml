@@ -3,7 +3,7 @@ name: Generate Swagger Docs
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - '**.go'  # Go dosyalarında değişiklik olduğunda çalışır
 
