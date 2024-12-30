@@ -12,3 +12,9 @@ type Foo struct {
 	// The creation timestamp
 	CreatedAt time.Time `json:"created_at" bson:"created_at"`
 }
+
+type CreateFooRequest struct {
+	Name string `json:"name"`
+
+	Description string `json:"description"`
+}

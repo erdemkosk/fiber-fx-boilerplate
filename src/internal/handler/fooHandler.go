@@ -61,22 +61,64 @@ func (f *FooHandler) GetById(c *fiber.Ctx) error {
 // @Tags foo
 // @Accept json
 // @Produce json
-// @Param foo body model.Foo true "Foo object"
+// @Param foo body model.CreateFooRequest true "Foo object"
 // @Success 201 {object} model.Foo
 // @Failure 400 {object} error
 // @Router /foo [post]
 func (f *FooHandler) Create(c *fiber.Ctx) error {
-	foo := new(model.Foo)
-	if err := c.BodyParser(foo); err != nil {
+	createRequest := new(model.CreateFooRequest)
+	if err := c.BodyParser(createRequest); err != nil {
 		return errors.NewBadRequestError(err.Error())
 	}
-	return f.fooService.Create(foo)
+
+	foo := &model.Foo{
+		Name:        createRequest.Name,
+		Description: createRequest.Description,
+	}
+
+	if err := f.fooService.Create(foo); err != nil {
+		return errors.NewInternalError(err.Error())
+	}
+
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+		"success": true,
+	})
 }
 
+// Update godoc
+// @Summary Update a foo
+// @Description Update an existing foo item by ID
+// @Tags foo
+// @Accept json
+// @Produce json
+// @Param id path string true "Foo ID"
+// @Param foo body model.CreateFooRequest true "Foo object"
+// @Success 200 {object} map[string]interface{} "{'success': true}"
+// @Failure 400 {object} error "Bad request"
+// @Failure 404 {object} error "Foo not found"
+// @Failure 500 {object} error "Internal server error"
+// @Router /foo/{id} [put]
 func (f *FooHandler) Update(c *fiber.Ctx) error {
-	foo := new(model.Foo)
-	if err := c.BodyParser(foo); err != nil {
+	id := c.Params("id")
+	if id == "" {
+		return errors.NewBadRequestError("id is required")
+	}
+
+	updateRequest := new(model.CreateFooRequest)
+	if err := c.BodyParser(updateRequest); err != nil {
 		return errors.NewBadRequestError(err.Error())
 	}
-	return f.fooService.Update(foo)
+
+	foo := &model.Foo{
+		Name:        updateRequest.Name,
+		Description: updateRequest.Description,
+	}
+
+	if err := f.fooService.Update(foo); err != nil {
+		return errors.NewInternalError(err.Error())
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"success": true,
+	})
 }

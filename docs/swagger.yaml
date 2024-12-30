@@ -1,5 +1,12 @@
 basePath: /api
 definitions:
+  model.CreateFooRequest:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+    type: object
   model.Foo:
     properties:
       created_at:
@@ -60,7 +67,7 @@ paths:
         name: foo
         required: true
         schema:
-          $ref: '#/definitions/model.Foo'
+          $ref: '#/definitions/model.CreateFooRequest'
       produces:
       - application/json
       responses:
@@ -96,6 +103,42 @@ paths:
           description: Not Found
           schema: {}
       summary: Get a foo by id
+      tags:
+      - foo
+    put:
+      consumes:
+      - application/json
+      description: Update an existing foo item by ID
+      parameters:
+      - description: Foo ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Foo object
+        in: body
+        name: foo
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateFooRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{''success'': true, ''data'': object}'
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad request
+          schema: {}
+        "404":
+          description: Foo not found
+          schema: {}
+        "500":
+          description: Internal server error
+          schema: {}
+      summary: Update a foo
       tags:
       - foo
   /health:

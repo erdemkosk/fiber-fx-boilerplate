@@ -70,7 +70,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Foo"
+                            "$ref": "#/definitions/model.CreateFooRequest"
                         }
                     }
                 ],
@@ -122,6 +122,58 @@ const docTemplate = `{
                         "schema": {}
                     }
                 }
+            },
+            "put": {
+                "description": "Update an existing foo item by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "foo"
+                ],
+                "summary": "Update a foo",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Foo ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Foo object",
+                        "name": "foo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.CreateFooRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{'success': true, 'data': object}",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {}
+                    },
+                    "404": {
+                        "description": "Foo not found",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {}
+                    }
+                }
             }
         },
         "/health": {
@@ -152,6 +204,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "model.CreateFooRequest": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
         "model.Foo": {
             "type": "object",
             "properties": {
