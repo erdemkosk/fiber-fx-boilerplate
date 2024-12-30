@@ -125,7 +125,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{''success'': true, ''data'': object}'
+          description: '{''success'': true}'
           schema:
             additionalProperties: true
             type: object
