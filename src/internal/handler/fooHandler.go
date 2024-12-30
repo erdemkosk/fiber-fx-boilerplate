@@ -4,6 +4,7 @@ import (
 	"github.com/erdemkosk/fiber-fx-boilerplate/src/internal/errors"
 	"github.com/erdemkosk/fiber-fx-boilerplate/src/internal/model"
 	"github.com/erdemkosk/fiber-fx-boilerplate/src/internal/service"
+	"github.com/erdemkosk/fiber-fx-boilerplate/src/internal/utils"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -30,7 +31,7 @@ func (f *FooHandler) GetAll(c *fiber.Ctx) error {
 	if err != nil {
 		return errors.NewInternalError(err.Error())
 	}
-	return c.JSON(foos)
+	return utils.SendResponse(c, fiber.StatusOK, utils.SuccessResponse(foos))
 }
 
 // GetById godoc
@@ -52,7 +53,7 @@ func (f *FooHandler) GetById(c *fiber.Ctx) error {
 	if foo == nil {
 		return errors.NewNotFoundError("Foo not found")
 	}
-	return c.JSON(foo)
+	return utils.SendResponse(c, fiber.StatusOK, utils.SuccessResponse(foo))
 }
 
 // Create godoc
@@ -80,9 +81,7 @@ func (f *FooHandler) Create(c *fiber.Ctx) error {
 		return errors.NewInternalError(err.Error())
 	}
 
-	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-		"success": true,
-	})
+	return utils.SendResponse(c, fiber.StatusCreated, utils.SuccessOnly())
 }
 
 // Update godoc
@@ -118,7 +117,5 @@ func (f *FooHandler) Update(c *fiber.Ctx) error {
 		return errors.NewInternalError(err.Error())
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"success": true,
-	})
+	return utils.SendResponse(c, fiber.StatusOK, utils.MessageResponse("Foo updated successfully"))
 }
