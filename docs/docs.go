@@ -155,7 +155,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "{'success': true, 'data': object}",
+                        "description": "{'success': true}",
                         "schema": {
                             "type": "object",
                             "additionalProperties": true
