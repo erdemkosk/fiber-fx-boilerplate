@@ -217,6 +217,10 @@ const docTemplate = `{
         },
         "model.Foo": {
             "type": "object",
+            "required": [
+                "description",
+                "name"
+            ],
             "properties": {
                 "created_at": {
                     "description": "The creation timestamp",
@@ -225,6 +229,8 @@ const docTemplate = `{
                 "description": {
                     "description": "The description of the foo item",
                     "type": "string",
+                    "maxLength": 500,
+                    "minLength": 10,
                     "example": "This is an example foo item"
                 },
                 "id": {
@@ -235,6 +241,8 @@ const docTemplate = `{
                 "name": {
                     "description": "The name of the foo item",
                     "type": "string",
+                    "maxLength": 50,
+                    "minLength": 3,
                     "example": "Example Foo"
                 }
             }
