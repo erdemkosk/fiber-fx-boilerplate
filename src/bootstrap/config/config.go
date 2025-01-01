@@ -14,8 +14,9 @@ type Config struct {
 }
 
 type AppConfig struct {
-	Env  string
-	Port int
+	Env            string
+	Port           int
+	SwaggerEnabled bool
 }
 
 type MongoConfig struct {
@@ -38,8 +39,9 @@ func LoadEnv() *Config {
 
 	config := &Config{
 		App: AppConfig{
-			Env:  viper.GetString("APP_ENV"),
-			Port: viper.GetInt("PORT"),
+			Env:            viper.GetString("APP_ENV"),
+			Port:           viper.GetInt("PORT"),
+			SwaggerEnabled: viper.GetBool("SWAGGER_ENABLED"),
 		},
 		Mongo: MongoConfig{
 			URL:          viper.GetString("MONGO_DB_URL"),

@@ -16,12 +16,15 @@ import (
 	"go.uber.org/zap"
 )
 
-func NewFiberApp() *fiber.App {
+func NewFiberApp(cfg *config.Config) *fiber.App {
 	app := fiber.New(fiber.Config{
 		DisableStartupMessage: true,
+		ErrorHandler:          middleware.ErrorHandler,
 	})
 
-	app.Get("/swagger/*", middleware.SwaggerMiddleware())
+	if cfg.App.SwaggerEnabled {
+		app.Get("/swagger/*", middleware.SwaggerMiddleware())
+	}
 
 	return app
 }
@@ -31,7 +34,11 @@ func StartFiberApp(lifecycle fx.Lifecycle, app *fiber.App, logger *zap.Logger, c
 		OnStart: func(ctx context.Context) error {
 			go func() {
 				logger.Info(fmt.Sprintf("🚀 Fiber server starting on :%d", cfg.App.Port))
-				logger.Info("📚 Swagger documentation is available at: /swagger")
+
+				if cfg.App.SwaggerEnabled {
+					logger.Info("📚 Swagger documentation is available at: /swagger")
+				}
+
 				if err := app.Listen(fmt.Sprintf(":%d", cfg.App.Port)); err != nil {
 					logger.Fatal("Fiber server failed to start", zap.Error(err))
 				}
