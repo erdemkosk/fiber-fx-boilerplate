@@ -67,21 +67,13 @@ func (f *FooHandler) GetById(c *fiber.Ctx) error {
 // @Failure 400 {object} error
 // @Router /foo [post]
 func (f *FooHandler) Create(c *fiber.Ctx) error {
-	createRequest := new(model.CreateFooRequest)
-	if err := c.BodyParser(createRequest); err != nil {
-		return errors.NewBadRequestError(err.Error())
+	foo := c.Locals("payload").(model.Foo)
+
+	if err := f.fooService.Create(&foo); err != nil {
+		return err
 	}
 
-	foo := &model.Foo{
-		Name:        createRequest.Name,
-		Description: createRequest.Description,
-	}
-
-	if err := f.fooService.Create(foo); err != nil {
-		return errors.NewInternalError(err.Error())
-	}
-
-	return utils.SendResponse(c, fiber.StatusCreated, utils.SuccessOnly())
+	return c.Status(fiber.StatusCreated).JSON(foo)
 }
 
 // Update godoc
@@ -103,12 +95,10 @@ func (f *FooHandler) Update(c *fiber.Ctx) error {
 		return errors.NewBadRequestError("id is required")
 	}
 
-	updateRequest := new(model.CreateFooRequest)
-	if err := c.BodyParser(updateRequest); err != nil {
-		return errors.NewBadRequestError(err.Error())
-	}
+	updateRequest := c.Locals("payload").(model.Foo)
 
 	foo := &model.Foo{
+		ID:          id,
 		Name:        updateRequest.Name,
 		Description: updateRequest.Description,
 	}

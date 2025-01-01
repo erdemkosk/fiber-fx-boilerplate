@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/erdemkosk/fiber-fx-boilerplate/src/bootstrap/config"
@@ -75,14 +76,35 @@ func (f *FooRepository) Update(foo *model.Foo) error {
 	ctx, cancel := context.WithTimeout(context.Background(), f.queryTimeout)
 	defer cancel()
 
-	update := bson.M{
-		"$set": foo,
+	objectId, err := primitive.ObjectIDFromHex(foo.ID)
+	if err != nil {
+		return err
 	}
 
-	_, err := f.collection.UpdateOne(
+	update := bson.M{
+		"$set": bson.M{
+			"name":        foo.Name,
+			"description": foo.Description,
+		},
+	}
+
+	result, err := f.collection.UpdateOne(
 		ctx,
-		bson.M{"_id": foo.ID},
+		bson.M{"_id": objectId},
 		update,
 	)
-	return err
+
+	if err != nil {
+		return err
+	}
+
+	if result.MatchedCount == 0 {
+		return errors.New("kayıt bulunamadı")
+	}
+
+	if result.ModifiedCount == 0 {
+		return errors.New("güncelleme yapılamadı")
+	}
+
+	return nil
 }

@@ -2,6 +2,8 @@ package routes
 
 import (
 	"github.com/erdemkosk/fiber-fx-boilerplate/src/internal/handler"
+	"github.com/erdemkosk/fiber-fx-boilerplate/src/internal/middleware"
+	"github.com/erdemkosk/fiber-fx-boilerplate/src/internal/model"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -19,6 +21,6 @@ func (r *FooRouter) SetupRoutes(router fiber.Router) {
 	foo := router.Group("/foo")
 	foo.Get("/", r.handler.GetAll)
 	foo.Get("/:id", r.handler.GetById)
-	foo.Post("/", r.handler.Create)
-	foo.Put("/:id", r.handler.Update)
+	foo.Post("/", middleware.RequestValidator(model.Foo{}), r.handler.Create)
+	foo.Put("/:id", middleware.RequestValidator(model.Foo{}), r.handler.Update)
 }
