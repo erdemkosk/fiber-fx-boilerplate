@@ -17,6 +17,8 @@ type AppConfig struct {
 	Env            string
 	Port           int
 	SwaggerEnabled bool
+	RateLimit      int
+	RateWindow     time.Duration
 }
 
 type MongoConfig struct {
@@ -42,6 +44,8 @@ func LoadEnv() *Config {
 			Env:            viper.GetString("APP_ENV"),
 			Port:           viper.GetInt("PORT"),
 			SwaggerEnabled: viper.GetBool("SWAGGER_ENABLED"),
+			RateLimit:      viper.GetInt("RATE_LIMIT"),
+			RateWindow:     viper.GetDuration("RATE_WINDOW"),
 		},
 		Mongo: MongoConfig{
 			URL:          viper.GetString("MONGO_DB_URL"),

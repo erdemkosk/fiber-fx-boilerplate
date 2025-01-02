@@ -22,6 +22,8 @@ func NewFiberApp(cfg *config.Config) *fiber.App {
 		ErrorHandler:          middleware.ErrorHandler,
 	})
 
+	app.Use(middleware.RateLimiterMiddleware(cfg))
+
 	if cfg.App.SwaggerEnabled {
 		app.Get("/swagger/*", middleware.SwaggerMiddleware())
 	}
