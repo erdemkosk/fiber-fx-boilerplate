@@ -5,11 +5,18 @@ import (
 	"github.com/erdemkosk/fiber-fx-boilerplate/src/internal/repository"
 )
 
-type FooService struct {
-	fooRepository *repository.FooRepository
+type IFooService interface {
+	GetAll() ([]*model.Foo, error)
+	GetById(id string) (*model.Foo, error)
+	Create(foo *model.Foo) error
+	Update(foo *model.Foo) error
 }
 
-func NewFooService(fooRepository *repository.FooRepository) *FooService {
+type FooService struct {
+	fooRepository repository.IFooRepository
+}
+
+func NewFooService(fooRepository repository.IFooRepository) IFooService {
 	return &FooService{
 		fooRepository: fooRepository,
 	}

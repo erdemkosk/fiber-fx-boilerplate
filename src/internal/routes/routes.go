@@ -22,8 +22,8 @@ var Module = fx.Options(
 )
 
 func registerRoutes(
-	fooHandler *handler.FooHandler,
-	healthHandler *handler.HealthHandler,
+	fooHandler handler.IFooHandler,
+	healthHandler handler.IHealthHandler,
 	route Route,
 ) {
 	api := route.Fiber.Group("/api")

@@ -6,22 +6,21 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+type IHealthHandler interface {
+	Check(c *fiber.Ctx) error
+}
+
 type HealthHandler struct{}
 
-func NewHealthHandler() *HealthHandler {
+var _ IHealthHandler = (*HealthHandler)(nil)
+
+func NewHealthHandler() IHealthHandler {
 	return &HealthHandler{}
 }
 
-// @Summary Health check endpoint
-// @Description Get server health status
-// @Tags health
-// @Accept json
-// @Produce json
-// @Success 200 {object} map[string]string
-// @Router /health [get]
 func (h *HealthHandler) Check(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
-		"status": "OK",
 		"time":   time.Now(),
+		"status": "ok",
 	})
 }

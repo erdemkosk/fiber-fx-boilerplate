@@ -23,7 +23,7 @@ func NewFiberApp(cfg *config.Config) *fiber.App {
 	})
 
 	app.Use(middleware.RateLimiterMiddleware(cfg))
-
+	app.Use(middleware.CorsMiddleware())
 	if cfg.App.SwaggerEnabled {
 		app.Get("/swagger/*", middleware.SwaggerMiddleware())
 	}

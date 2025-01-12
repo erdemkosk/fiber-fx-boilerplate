@@ -8,11 +8,18 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type FooHandler struct {
-	fooService *service.FooService
+type IFooHandler interface {
+	GetAll(c *fiber.Ctx) error
+	GetById(c *fiber.Ctx) error
+	Create(c *fiber.Ctx) error
+	Update(c *fiber.Ctx) error
 }
 
-func NewFooHandler(fooService *service.FooService) *FooHandler {
+type FooHandler struct {
+	fooService service.IFooService
+}
+
+func NewFooHandler(fooService service.IFooService) IFooHandler {
 	return &FooHandler{
 		fooService: fooService,
 	}

@@ -1,12 +1,12 @@
-package service
+package repository
 
 import "go.uber.org/fx"
 
 var Module = fx.Options(
 	fx.Provide(
 		fx.Annotate(
-			NewFooService,
-			fx.As(new(IFooService)),
+			NewFooRepository,
+			fx.As(new(IFooRepository)),
 		),
 	),
 )

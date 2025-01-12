@@ -6,10 +6,10 @@ import (
 )
 
 type HealthRouter struct {
-	handler *handler.HealthHandler
+	handler handler.IHealthHandler
 }
 
-func NewHealthRouter(handler *handler.HealthHandler) *HealthRouter {
+func NewHealthRouter(handler handler.IHealthHandler) *HealthRouter {
 	return &HealthRouter{
 		handler: handler,
 	}

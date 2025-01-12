@@ -13,6 +13,13 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+type IFooRepository interface {
+	GetAll() ([]*model.Foo, error)
+	GetById(id string) (*model.Foo, error)
+	Create(foo *model.Foo) error
+	Update(foo *model.Foo) error
+}
+
 type FooRepository struct {
 	db           *mongodb.MongoDB
 	collection   *mongo.Collection
@@ -99,11 +106,11 @@ func (f *FooRepository) Update(foo *model.Foo) error {
 	}
 
 	if result.MatchedCount == 0 {
-		return errors.New("kayıt bulunamadı")
+		return errors.New("not found")
 	}
 
 	if result.ModifiedCount == 0 {
-		return errors.New("güncelleme yapılamadı")
+		return errors.New("cannot update")
 	}
 
 	return nil

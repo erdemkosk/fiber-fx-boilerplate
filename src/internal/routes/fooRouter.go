@@ -8,10 +8,10 @@ import (
 )
 
 type FooRouter struct {
-	handler *handler.FooHandler
+	handler handler.IFooHandler
 }
 
-func NewFooRouter(handler *handler.FooHandler) *FooRouter {
+func NewFooRouter(handler handler.IFooHandler) *FooRouter {
 	return &FooRouter{
 		handler: handler,
 	}
