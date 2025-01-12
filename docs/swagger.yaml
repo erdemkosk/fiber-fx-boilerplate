@@ -148,23 +148,6 @@ paths:
       summary: Update a foo
       tags:
       - foo
-  /health:
-    get:
-      consumes:
-      - application/json
-      description: Get server health status
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      summary: Health check endpoint
-      tags:
-      - health
 schemes:
 - http
 - https
